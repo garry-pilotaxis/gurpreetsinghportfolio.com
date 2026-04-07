@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RITUAL — Premium Chocolate Brand · Gurpreet Singh</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:      #F3F0EA;
+  --ink:     #0C0B09;
+  --stone:   #7A776F;
+  --brown:   #2B1A14;
+  --cognac:  #C4916C;
+  --sienna:  #563B2A;
+  --burgundy:#660200;
+  --cream:   #E6D9C8;
+  --border:  rgba(12,11,9,.1);
+  --border-l:rgba(196,145,108,.15);
+  --ff-d: 'Cormorant Garamond', Georgia, serif;
+  --ff-b: 'DM Sans', system-ui, sans-serif;
+  --ease-o: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+body { background: var(--bg); color: var(--ink); font-family: var(--ff-b); overflow-x: hidden; cursor: none; }
+
+/* LEATHER TEXTURE LAYER — applied to dark sections via mixin class */
+.leather {
+  position: relative;
+}
+.leather::after {
+  content: '';
+  position: absolute; inset: 0; pointer-events: none; z-index: 1;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='l'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='6' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeBlend in='SourceGraphic' mode='overlay' result='blend'/%3E%3CfeComposite in='blend' in2='SourceGraphic' operator='in'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23l)' opacity='0.08'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+}
+.leather > * { position: relative; z-index: 2; }
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.75rem 3.5rem;
+  background: rgba(43,26,20,.92);
+  backdrop-filter: blur(14px);
+  border-bottom: .5px solid var(--border-l);
+}
+.nav-back {
+  display: flex; align-items: center; gap: .8rem;
+  font-size: .68rem; letter-spacing: .16em; text-transform: uppercase;
+  color: rgba(243,240,234,.4); text-decoration: none;
+  transition: color .2s, gap .2s;
+}
+.nav-back:hover { color: var(--cognac); gap: 1.1rem; }
+.nav-back svg { width: 14px; transition: transform .2s; }
+.nav-back:hover svg { transform: translateX(-3px); }
+.nav-title { font-family: var(--ff-d); font-size: 1rem; font-weight: 400; letter-spacing: .14em; color: rgba(243,240,234,.88); text-align: right; }
+.nav-cat { font-size: .6rem; letter-spacing: .2em; text-transform: uppercase; color: rgba(196,145,108,.55); text-align: right; margin-top: .15rem; }
+
+/* CURSOR */
+.cursor { position: fixed; width: 8px; height: 8px; background: var(--cognac); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: width .25s, height .25s; }
+.cursor-ring { position: fixed; width: 34px; height: 34px; border: 1px solid rgba(196,145,108,.35); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); transition: width .3s, height .3s; }
+body.hovering .cursor { width: 14px; height: 14px; }
+body.hovering .cursor-ring { width: 52px; height: 52px; }
+
+/* ── HERO ──────────────────────────────────────────────── */
+.hero {
+  height: 100vh; position: relative; overflow: hidden;
+  display: flex; align-items: flex-end;
+}
+.hero-img {
+  position: absolute; inset: 0;
+  background: url('ritual/hero.jpg') center center / cover no-repeat;
+  transform: scale(1.04);
+  animation: hero-zoom 9s var(--ease-o) forwards;
+}
+@keyframes hero-zoom { to { transform: scale(1); } }
+.hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(14,7,4,.88) 0%,
+    rgba(14,7,4,.08) 35%,
+    transparent 60%
+  );
+}
+.hero-content {
+  position: relative; z-index: 2;
+  padding: 0 3.5rem 4rem; width: 100%;
+  animation: fadeUp 1.2s .5s var(--ease-o) both;
+}
+.hero-meta {
+  display: flex; gap: 3.5rem;
+  padding-top: 1.8rem;
+  border-top: .5px solid rgba(196,145,108,.18);
+}
+.meta-label { font-size: .54rem; letter-spacing: .24em; text-transform: uppercase; color: rgba(196,145,108,.42); margin-bottom: .4rem; }
+.meta-val { font-family: var(--ff-d); font-size: 1rem; font-weight: 300; color: rgba(230,217,200,.78); }
+
+/* ── OVERVIEW ─────────────────────────────────────────── */
+.overview {
+  padding: 7rem 3.5rem;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 8rem; align-items: start;
+  background: var(--bg);
+}
+.ov-label { font-size: .6rem; letter-spacing: .24em; text-transform: uppercase; color: var(--stone); margin-bottom: 1.5rem; }
+.ov-heading { font-family: var(--ff-d); font-size: clamp(2rem, 3.5vw, 3.5rem); font-weight: 300; font-style: italic; line-height: 1.25; margin-bottom: 2.5rem; color: var(--brown); }
+.ov-text { font-size: .875rem; font-weight: 300; line-height: 1.95; color: var(--stone); }
+.ov-text + .ov-text { margin-top: 1.2rem; }
+.ov-row { display: flex; justify-content: space-between; align-items: baseline; padding: 1.35rem 0; border-bottom: .5px solid var(--border); }
+.ov-row:first-child { border-top: .5px solid var(--border); }
+.ov-key { font-size: .6rem; letter-spacing: .16em; text-transform: uppercase; color: var(--stone); }
+.ov-value { font-family: var(--ff-d); font-size: 1.05rem; font-weight: 300; font-style: italic; }
+
+/* ── CAPTION STRIP ────────────────────────────────────── */
+.caption-strip {
+  padding: 1.8rem 3.5rem;
+  display: flex; align-items: baseline; justify-content: space-between;
+  border-bottom: .5px solid var(--border);
+  background: var(--bg);
+}
+.caption-strip.dark {
+  background: var(--brown);
+  border-bottom-color: var(--border-l);
+}
+.cap-title { font-family: var(--ff-d); font-size: 1.15rem; font-weight: 300; font-style: italic; }
+.cap-title.light { color: rgba(230,217,200,.8); }
+.cap-num { font-family: var(--ff-d); font-size: .82rem; font-weight: 300; color: var(--stone); }
+.cap-num.light { color: rgba(196,145,108,.45); }
+
+/* ── FULL IMAGE ───────────────────────────────────────── */
+.full-img { width: 100%; overflow: hidden; }
+.full-img img { width: 100%; display: block; transition: transform 1.3s var(--ease-o); }
+.full-img:hover img { transform: scale(1.02); }
+.full-img.ratio-16-9 { aspect-ratio: 16/9; }
+.full-img.ratio-4-3  { aspect-ratio: 4/3; }
+.full-img.ratio-3-1  { aspect-ratio: 3/1; }
+
+/* ── LOGO MARK SECTION ────────────────────────────────── */
+.logomark-sec {
+  background: var(--brown);
+  padding: 6rem 3.5rem;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 7rem; align-items: center;
+}
+/* Leather noise over the brown sections */
+.logomark-sec,
+.palette-sec,
+.packaging-sec,
+.case-footer { background-image:
+  url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='5' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.055'/%3E%3C/svg%3E"); }
+
+.lm-text .ov-label { color: rgba(196,145,108,.5); }
+.lm-heading { font-family: var(--ff-d); font-size: clamp(2rem, 4vw, 3.8rem); font-weight: 300; font-style: italic; line-height: 1.1; color: rgba(230,217,200,.9); margin-bottom: 1.5rem; }
+.lm-text-body { font-size: .85rem; font-weight: 300; line-height: 1.95; color: rgba(196,145,108,.55); }
+.lm-logo-frame {
+  border: .5px solid var(--border-l);
+  padding: 3.5rem 2.5rem;
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+}
+/* Corner marks */
+.lm-logo-frame::before,
+.lm-logo-frame::after {
+  content: '';
+  position: absolute;
+  width: 20px; height: 20px;
+  border-color: rgba(196,145,108,.3); border-style: solid;
+}
+.lm-logo-frame::before { top: -6px; left: -6px; border-width: 1px 0 0 1px; }
+.lm-logo-frame::after  { bottom: -6px; right: -6px; border-width: 0 1px 1px 0; }
+.lm-logo-frame img { width: 100%; max-width: 420px; display: block; }
+
+/* ── BRAND STYLE GUIDE ────────────────────────────────── */
+.guide-wrap {
+  background: #160D09;
+  padding: 5rem 3.5rem;
+  display: flex; justify-content: center;
+}
+.guide-frame {
+  max-width: 920px; width: 100%;
+  border: .5px solid rgba(196,145,108,.12);
+  box-shadow: 0 48px 96px rgba(0,0,0,.6);
+  overflow: hidden;
+}
+.guide-frame img { width: 100%; display: block; }
+
+/* ── COLOUR PALETTE ───────────────────────────────────── */
+.palette-sec {
+  background: var(--sienna);
+  padding: 7rem 3.5rem;
+}
+.palette-label { font-size: .6rem; letter-spacing: .24em; text-transform: uppercase; color: rgba(196,145,108,.45); margin-bottom: 3rem; }
+.palette-heading { font-family: var(--ff-d); font-size: clamp(2.5rem, 5vw, 5.5rem); font-weight: 300; font-style: italic; line-height: .95; color: rgba(230,217,200,.9); margin-bottom: 4.5rem; }
+.swatches { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; border: .5px solid rgba(196,145,108,.08); }
+.swatch { padding: 2.5rem 1.8rem; background: rgba(0,0,0,.08); }
+.sw-block { width: 40px; height: 40px; border-radius: 50%; margin-bottom: 1.3rem; box-shadow: 0 4px 16px rgba(0,0,0,.3); }
+.sw-name { font-family: var(--ff-d); font-size: 1rem; font-weight: 300; color: rgba(230,217,200,.75); margin-bottom: .25rem; }
+.sw-sub { font-size: .62rem; letter-spacing: .1em; color: rgba(196,145,108,.45); margin-bottom: .5rem; }
+.sw-hex { font-size: .56rem; letter-spacing: .16em; color: rgba(230,217,200,.22); font-family: var(--ff-b); }
+
+/* ── TYPOGRAPHY ───────────────────────────────────────── */
+.typo-sec {
+  padding: 7rem 3.5rem;
+  background: var(--bg);
+  display: grid; grid-template-columns: 1.1fr .9fr; gap: 6rem; align-items: start;
+}
+.typo-label { font-size: .6rem; letter-spacing: .24em; text-transform: uppercase; color: var(--stone); margin-bottom: 1.5rem; }
+.typo-heading { font-family: var(--ff-d); font-size: clamp(2rem, 3.8vw, 4rem); font-weight: 300; font-style: italic; line-height: 1.1; color: var(--brown); margin-bottom: 3.5rem; }
+.type-specimen { padding-bottom: 2.5rem; margin-bottom: 2.5rem; border-bottom: .5px solid var(--border); }
+.type-specimen:last-child { border-bottom: none; padding-bottom: 0; margin-bottom: 0; }
+.type-name { font-size: .56rem; letter-spacing: .22em; text-transform: uppercase; color: var(--stone); margin-bottom: 1rem; }
+.type-karma { font-family: 'Cormorant Garamond', serif; font-size: 3.5rem; font-weight: 400; letter-spacing: .06em; color: var(--brown); line-height: 1; }
+.type-sub { font-size: .68rem; letter-spacing: .18em; text-transform: uppercase; color: var(--cognac); margin-top: .7rem; }
+.type-avenir { font-family: var(--ff-b); font-size: .82rem; font-weight: 300; letter-spacing: .12em; text-transform: uppercase; color: var(--stone); line-height: 2; }
+.typo-right { padding-top: 2rem; }
+.brand-statement {
+  font-family: var(--ff-d);
+  font-size: clamp(1.6rem, 3vw, 2.6rem);
+  font-weight: 300; font-style: italic;
+  line-height: 1.35; color: var(--brown);
+  border-left: 1.5px solid var(--cognac);
+  padding-left: 2rem; margin-bottom: 2rem;
+}
+.brand-stmt-src { font-size: .6rem; letter-spacing: .2em; text-transform: uppercase; color: var(--stone); padding-left: 2rem; }
+
+/* ── PACKAGING CONCEPT ────────────────────────────────── */
+.packaging-sec {
+  background: var(--brown);
+  padding: 7rem 3.5rem;
+  display: grid; grid-template-columns: .9fr 1.1fr; gap: 7rem; align-items: center;
+}
+.pk-label { font-size: .6rem; letter-spacing: .24em; text-transform: uppercase; color: rgba(196,145,108,.45); margin-bottom: 1.5rem; }
+.pk-heading { font-family: var(--ff-d); font-size: clamp(2rem, 4vw, 4rem); font-weight: 300; font-style: italic; line-height: 1.1; color: rgba(230,217,200,.9); margin-bottom: 1.8rem; }
+.pk-text { font-size: .85rem; font-weight: 300; line-height: 1.95; color: rgba(196,145,108,.5); }
+.pk-divider { width: 48px; height: .5px; background: rgba(196,145,108,.3); margin: 1.8rem 0; }
+.pk-list { list-style: none; }
+.pk-list li {
+  font-size: .72rem; letter-spacing: .12em; text-transform: uppercase;
+  color: rgba(230,217,200,.5); padding: 1rem 0;
+  border-bottom: .5px solid rgba(196,145,108,.1);
+  display: flex; align-items: center; gap: 1rem;
+}
+.pk-list li::before { content: '–'; color: var(--cognac); font-size: .9rem; }
+.pk-visual {
+  position: relative;
+  border: .5px solid var(--border-l);
+  padding: 4rem 3rem;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 1.5rem; text-align: center;
+  background: rgba(0,0,0,.18);
+  min-height: 380px;
+}
+/* Corner marks on packaging visual */
+.pk-visual::before, .pk-visual::after {
+  content: '';
+  position: absolute;
+  width: 24px; height: 24px;
+  border-color: rgba(196,145,108,.2); border-style: solid;
+}
+.pk-visual::before { top: -8px; left: -8px; border-width: 1px 0 0 1px; }
+.pk-visual::after  { bottom: -8px; right: -8px; border-width: 0 1px 1px 0; }
+.pk-visual-wordmark { font-family: var(--ff-d); font-size: 2.8rem; font-weight: 300; letter-spacing: .22em; color: var(--cognac); line-height: 1; }
+.pk-visual-rule { width: 56px; height: .5px; background: rgba(196,145,108,.3); }
+.pk-visual-tag { font-family: var(--ff-d); font-size: .9rem; font-style: italic; font-weight: 300; color: rgba(230,217,200,.45); letter-spacing: .06em; }
+.pk-visual-bar { width: 100%; height: .5px; background: repeating-linear-gradient(90deg, rgba(196,145,108,.4) 0, rgba(196,145,108,.4) 4px, transparent 4px, transparent 10px); margin: .5rem 0; }
+
+/* ── FOOTER ───────────────────────────────────────────── */
+.case-footer {
+  background: #160D09;
+  padding: 5rem 3.5rem;
+  display: flex; align-items: center; justify-content: space-between;
+  border-top: .5px solid var(--border-l);
+}
+.cf-label { font-size: .6rem; letter-spacing: .24em; text-transform: uppercase; color: rgba(196,145,108,.35); margin-bottom: .8rem; }
+.cf-name { font-family: var(--ff-d); font-size: clamp(1.8rem, 4vw, 4rem); font-weight: 300; font-style: italic; color: rgba(230,217,200,.85); }
+.cf-back {
+  display: inline-flex; align-items: center; gap: .9rem;
+  border: .5px solid rgba(196,145,108,.3);
+  color: var(--cognac); background: rgba(196,145,108,.06);
+  padding: 1rem 2.2rem;
+  font-size: .66rem; letter-spacing: .18em; text-transform: uppercase;
+  text-decoration: none; transition: background .25s, color .25s, border-color .25s;
+}
+.cf-back:hover { background: var(--cognac); color: var(--brown); border-color: var(--cognac); }
+
+/* ── REVEAL ───────────────────────────────────────────── */
+.reveal { opacity: 0; transform: translateY(22px); transition: opacity .9s var(--ease-o), transform .9s var(--ease-o); }
+.reveal.in { opacity: 1; transform: none; }
+.rd1 { transition-delay: .1s; } .rd2 { transition-delay: .2s; } .rd3 { transition-delay: .3s; }
+
+@keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: none; } }
+
+/* ── RESPONSIVE ───────────────────────────────────────── */
+@media (max-width: 900px) {
+  nav { padding: 1.4rem 1.5rem; }
+  .hero-content { padding: 0 1.5rem 3.5rem; }
+  .hero-meta { flex-wrap: wrap; gap: 2rem; }
+  .overview, .logomark-sec, .typo-sec, .packaging-sec { grid-template-columns: 1fr; gap: 3.5rem; padding: 5rem 1.5rem; }
+  .swatches { grid-template-columns: repeat(2, 1fr); }
+  .palette-sec, .guide-wrap { padding: 4rem 1.5rem; }
+  .caption-strip { padding: 1.5rem; }
+  .case-footer { flex-direction: column; gap: 3rem; padding: 4rem 1.5rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cur"></div>
+<div class="cursor-ring" id="cring"></div>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-back" href="index.html">
+    <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.2">
+      <path d="M13 7H1M6 2L1 7l5 5"/>
+    </svg>
+    Back to Portfolio
+  </a>
+  <div>
+    <div class="nav-title">RITUAL</div>
+    <div class="nav-cat">Premium Chocolate — Brand Identity</div>
+  </div>
+</nav>
+
+<!-- ── HERO ──────────────────────────────────────────── -->
+<section class="hero">
+  <div class="hero-img"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-meta">
+      <div class="meta-item">
+        <div class="meta-label">Category</div>
+        <div class="meta-val">Brand Identity</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Industry</div>
+        <div class="meta-val">Premium Chocolate</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Deliverables</div>
+        <div class="meta-val">Logo · Palette · Typography · System</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Year</div>
+        <div class="meta-val">2024</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── OVERVIEW ───────────────────────────────────────── -->
+<section class="overview">
+  <div class="reveal">
+    <div class="ov-label">The Brief</div>
+    <h2 class="ov-heading">"A chocolate brand built for people who believe pleasure should be earned — slowly."</h2>
+    <p class="ov-text">RITUAL is a premium single-origin chocolate brand rooted in the philosophy that the best things in life are never rushed. Every bar, every truffle, every square of RITUAL chocolate is the result of a deliberate process — from bean selection to the final temper — and the brand identity had to reflect exactly that.</p>
+    <p class="ov-text" style="margin-top:1.3rem;">The challenge was to create a visual identity that felt unmistakably luxurious without leaning on the tired tropes of gold foil and velvet. Instead, the brand draws its palette from the chocolate itself — the deep browns of cacao husks, the warm cognac of aged ganache, the burgundy of a slow-cooked reduction — and its typography from the Old-Style tradition of European confectionery.</p>
+  </div>
+  <div class="reveal rd2">
+    <div class="ov-row"><span class="ov-key">Brand</span><span class="ov-value">RITUAL Chocolate</span></div>
+    <div class="ov-row"><span class="ov-key">Positioning</span><span class="ov-value">Premium Single-Origin</span></div>
+    <div class="ov-row"><span class="ov-key">Scope</span><span class="ov-value">Full Brand System</span></div>
+    <div class="ov-row"><span class="ov-key">Deliverables</span><span class="ov-value">Logo Suite, Colour System, Typography, Packaging Direction</span></div>
+    <div class="ov-row"><span class="ov-key">Tone</span><span class="ov-value">Slow · Deliberate · Earned</span></div>
+    <div class="ov-row"><span class="ov-key">Tools</span><span class="ov-value">Illustrator · Photoshop · InDesign</span></div>
+  </div>
+</section>
+
+<!-- ── PRIMARY LOGO ───────────────────────────────────── -->
+<div class="caption-strip reveal">
+  <span class="cap-title">The Logo System</span>
+  <span class="cap-num">01</span>
+</div>
+
+<section class="logomark-sec reveal">
+  <div class="lm-text">
+    <div class="ov-label" style="color:rgba(196,145,108,.5);">Primary Wordmark</div>
+    <h2 class="lm-heading">Where the mark earns its place.</h2>
+    <p class="lm-text-body">The RITUAL wordmark is set in Karma — an Old-Style serif with roots in classical European typography. Its generous contrast between thick and thin strokes mirrors the ritual of tempering: precision meeting patience. The rectangular containment frame references both chocolate bar packaging and the deliberate borders of heritage confectionery. The tagline, <em style="font-style:italic;color:rgba(230,217,200,.55);">"Crafted as Tradition Demands,"</em> is set in MoonVilla Stallion — a hand-lettered script that introduces warmth and human touch.</p>
+    <div style="width:48px;height:.5px;background:rgba(196,145,108,.3);margin:2rem 0;"></div>
+    <p class="lm-text-body">The logo works in two colorways: Cognac-on-Brown for primary packaging and marketing, Black-on-Cream for secondary print applications and editorial contexts.</p>
+  </div>
+  <div class="lm-logo-frame reveal rd2">
+    <img src="ritual/hero.jpg" alt="RITUAL Primary Logo — Cognac on leather brown" style="border-radius:0;">
+  </div>
+</section>
+
+<!-- ── BRAND STYLE GUIDE ──────────────────────────────── -->
+<div class="caption-strip dark reveal">
+  <span class="cap-title light">Brand Style Guide</span>
+  <span class="cap-num light">02</span>
+</div>
+<div class="guide-wrap reveal rd1">
+  <div class="guide-frame">
+    <img src="ritual/styleguide.png" alt="RITUAL Brand Style Guide — Full System">
+  </div>
+</div>
+
+<!-- ── COLOUR PALETTE ─────────────────────────────────── -->
+<section class="palette-sec reveal">
+  <div class="palette-label">The Colour System</div>
+  <h2 class="palette-heading">The palette<br><em style="font-style:italic;">of cacao.</em></h2>
+  <div class="swatches">
+    <div class="swatch">
+      <div class="sw-block" style="background:#2B1A14;"></div>
+      <div class="sw-name">Dark Cacao</div>
+      <div class="sw-sub">Primary — Backgrounds</div>
+      <div class="sw-hex">#2B1A14</div>
+    </div>
+    <div class="swatch">
+      <div class="sw-block" style="background:#C4916C;"></div>
+      <div class="sw-name">Cognac</div>
+      <div class="sw-sub">Primary — Accents & Logo</div>
+      <div class="sw-hex">#C4916C</div>
+    </div>
+    <div class="swatch">
+      <div class="sw-block" style="background:#563B2A;"></div>
+      <div class="sw-name">Raw Sienna</div>
+      <div class="sw-sub">Secondary — Sections</div>
+      <div class="sw-hex">#563B2A</div>
+    </div>
+    <div class="swatch">
+      <div class="sw-block" style="background:#660200;"></div>
+      <div class="sw-name">Burgundy</div>
+      <div class="sw-sub">Secondary — Accents</div>
+      <div class="sw-hex">#660200</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TYPOGRAPHY ─────────────────────────────────────── -->
+<section class="typo-sec">
+  <div class="reveal">
+    <div class="typo-label">Typography System</div>
+    <h2 class="typo-heading">Type that tastes like something.</h2>
+
+    <div class="type-specimen">
+      <div class="type-name">Karma — Wordmark & Display</div>
+      <div class="type-karma">RITUAL</div>
+      <div class="type-sub">Logo · Headlines · Brand Statements</div>
+    </div>
+
+    <div class="type-specimen">
+      <div class="type-name">Avenir Next Condensed — Body & UI</div>
+      <div class="type-avenir">
+        Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm<br>
+        Nn Oo Pp Qq Rr Ss Tt Uu Vv Ww Xx Yy Zz
+      </div>
+      <div class="type-sub">Body Copy · Ingredients Lists · Digital UI</div>
+    </div>
+
+    <div class="type-specimen">
+      <div class="type-name">Ador Hairline — Supporting Text</div>
+      <div style="font-family:var(--ff-d);font-size:1.1rem;font-weight:300;letter-spacing:.3em;text-transform:uppercase;color:var(--stone);">Single Origin · 72% Cacao</div>
+      <div class="type-sub">Labels · Percentage Marks · Secondary Details</div>
+    </div>
+  </div>
+
+  <div class="typo-right reveal rd2">
+    <blockquote class="brand-statement">
+      "This brand does not chase attention.<br>It earns respect."
+    </blockquote>
+    <p class="brand-stmt-src">Brand Direction — RITUAL, 2024</p>
+
+    <div style="margin-top:3.5rem;padding-top:3rem;border-top:.5px solid var(--border);">
+      <div class="typo-label" style="margin-bottom:1rem;">Typography Principle</div>
+      <p style="font-size:.82rem;font-weight:300;line-height:1.9;color:var(--stone);">Every typographic decision in the RITUAL system is driven by restraint. No decorative flourishes beyond what is necessary, no weight heavier than what the context demands. The hierarchy is clear: Karma commands the space at the top, Avenir Next Condensed organises information cleanly below it, and Ador Hairline whispers the finest details.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── PACKAGING DIRECTION ────────────────────────────── -->
+<div class="caption-strip dark reveal">
+  <span class="cap-title light">Packaging Direction</span>
+  <span class="cap-num light">04</span>
+</div>
+
+<section class="packaging-sec reveal">
+  <div>
+    <div class="pk-label">How the Brand Lives on Product</div>
+    <h2 class="pk-heading">A bar worth holding.</h2>
+    <p class="pk-text">The packaging direction for RITUAL is built on restraint and material honesty. Dark kraft paper stocks, textured like the cacao husk itself, provide the base. The wordmark is embossed or foil-blocked in cognac — never printed flat, always three-dimensional, always tactile. The brand's luxury is communicated through touch before it's seen.</p>
+    <div class="pk-divider"></div>
+    <ul class="pk-list">
+      <li>Embossed wordmark on textured kraft</li>
+      <li>Cognac foil accent lines on all edges</li>
+      <li>Single-origin origin stamp on back panel</li>
+      <li>Percentage mark in Karma at large scale</li>
+      <li>Wax-seal RI monogram on gift packaging</li>
+    </ul>
+  </div>
+
+  <div class="pk-visual reveal rd2">
+    <div class="pk-visual-bar"></div>
+    <div class="pk-visual-wordmark">RITUAL</div>
+    <div class="pk-visual-rule"></div>
+    <div class="pk-visual-tag">Single Origin · 72% Dark Cacao</div>
+    <div style="margin:1.5rem 0;font-family:var(--ff-b);font-size:.56rem;letter-spacing:.28em;text-transform:uppercase;color:rgba(196,145,108,.3);">Crafted as Tradition Demands</div>
+    <div style="display:flex;align-items:center;justify-content:center;width:60px;height:60px;border:.5px solid rgba(196,145,108,.2);">
+      <span style="font-family:var(--ff-d);font-size:1.6rem;font-weight:300;color:rgba(196,145,108,.55);">RI</span>
+    </div>
+    <div class="pk-visual-bar"></div>
+  </div>
+</section>
+
+<!-- ── FOOTER ─────────────────────────────────────────── -->
+<div class="case-footer">
+  <div>
+    <div class="cf-label">Project</div>
+    <div class="cf-name">RITUAL — Premium Chocolate Brand</div>
+  </div>
+  <a class="cf-back" href="index.html">← Back to Portfolio</a>
+</div>
+
+<script>
+const cur = document.getElementById('cur');
+const ring = document.getElementById('cring');
+let mx = 0, my = 0, rx = 0, ry = 0;
+document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; cur.style.left = mx+'px'; cur.style.top = my+'px'; });
+(function loop() { rx += (mx-rx)*.11; ry += (my-ry)*.11; ring.style.left = rx+'px'; ring.style.top = ry+'px'; requestAnimationFrame(loop); })();
+document.querySelectorAll('a, button').forEach(el => {
+  el.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
+  el.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
+});
+const io = new IntersectionObserver(e => e.forEach(x => { if(x.isIntersecting) x.target.classList.add('in'); }), { threshold: 0.07 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>

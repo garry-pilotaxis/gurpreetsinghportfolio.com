@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jordan Moran — Brand Identity · Gurpreet Singh</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:     #F3F0EA;
+  --ink:    #0C0B09;
+  --gold:   #B8904A;
+  --stone:  #7A776F;
+  --navy:   #1C2B45;
+  --crimson:#8B1F1F;
+  --jgold:  #C9A84C;
+  --border: rgba(12,11,9,.1);
+  --ff-d: 'Cormorant Garamond', Georgia, serif;
+  --ff-b: 'DM Sans', system-ui, sans-serif;
+  --ease-o: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+body { background: var(--bg); color: var(--ink); font-family: var(--ff-b); overflow-x: hidden; cursor: none; }
+
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+  pointer-events: none; z-index: 9990; mix-blend-mode: multiply;
+}
+
+/* CURSOR */
+.cursor { position: fixed; width: 8px; height: 8px; background: var(--ink); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: width .25s, height .25s, background .25s; }
+.cursor-ring { position: fixed; width: 34px; height: 34px; border: 1px solid rgba(12,11,9,.3); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); transition: width .3s, height .3s; }
+body.hovering .cursor { width: 14px; height: 14px; background: var(--jgold); }
+body.hovering .cursor-ring { width: 52px; height: 52px; border-color: rgba(201,168,76,.35); }
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.75rem 3.5rem;
+  background: rgba(243,240,234,.88);
+  backdrop-filter: blur(12px);
+  border-bottom: .5px solid var(--border);
+}
+.nav-back {
+  display: flex; align-items: center; gap: .8rem;
+  font-size: .68rem; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--stone); text-decoration: none;
+  transition: color .2s, gap .2s;
+}
+.nav-back:hover { color: var(--ink); gap: 1.1rem; }
+.nav-back svg { width: 14px; transition: transform .2s; }
+.nav-back:hover svg { transform: translateX(-3px); }
+.nav-title { font-family: var(--ff-d); font-size: 1rem; font-weight: 400; letter-spacing: .06em; color: var(--ink); }
+.nav-cat { font-size: .62rem; letter-spacing: .18em; text-transform: uppercase; color: var(--stone); text-align: right; }
+
+/* HERO */
+.hero {
+  height: 100vh; position: relative; overflow: hidden;
+  display: flex; align-items: flex-end;
+}
+.hero-img {
+  position: absolute; inset: 0;
+  background: url('jordanmoran/Business_Card_Front.jpg') center center / cover no-repeat;
+  transform: scale(1.04);
+  animation: hero-zoom 8s var(--ease-o) forwards;
+}
+@keyframes hero-zoom { to { transform: scale(1); } }
+.hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(28,43,69,.85) 0%, rgba(28,43,69,.2) 50%, transparent 100%);
+}
+.hero-content {
+  position: relative; z-index: 2;
+  padding: 0 3.5rem 4.5rem; width: 100%;
+  animation: fadeUp 1.2s .3s var(--ease-o) both;
+}
+.hero-tag {
+  font-size: .62rem; letter-spacing: .25em; text-transform: uppercase;
+  color: rgba(243,240,234,.5); margin-bottom: 1rem;
+  display: flex; align-items: center; gap: 1rem;
+}
+.hero-tag::before { content: ''; width: 28px; height: .5px; background: rgba(243,240,234,.4); }
+.hero-title {
+  font-family: var(--ff-d);
+  font-size: clamp(3.5rem, 8vw, 9rem);
+  font-weight: 300; line-height: .88; letter-spacing: -.025em;
+  color: #F3F0EA; margin-bottom: 2rem;
+}
+.hero-title em { font-style: italic; color: var(--jgold); }
+.hero-meta {
+  display: flex; gap: 3.5rem;
+  padding-top: 2rem;
+  border-top: .5px solid rgba(243,240,234,.15);
+}
+.meta-label { font-size: .58rem; letter-spacing: .2em; text-transform: uppercase; color: rgba(243,240,234,.4); margin-bottom: .3rem; }
+.meta-val { font-family: var(--ff-d); font-size: 1rem; font-weight: 300; color: rgba(243,240,234,.85); }
+
+/* OVERVIEW */
+.overview {
+  padding: 7rem 3.5rem;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 8rem; align-items: start;
+}
+.ov-label { font-size: .62rem; letter-spacing: .22em; text-transform: uppercase; color: var(--stone); margin-bottom: 1.5rem; }
+.ov-heading { font-family: var(--ff-d); font-size: clamp(2rem, 3.5vw, 3.5rem); font-weight: 300; font-style: italic; line-height: 1.25; margin-bottom: 2.5rem; }
+.ov-text { font-size: .875rem; font-weight: 300; line-height: 1.9; color: var(--stone); }
+.ov-row { display: flex; justify-content: space-between; align-items: baseline; padding: 1.4rem 0; border-bottom: .5px solid var(--border); }
+.ov-row:first-child { border-top: .5px solid var(--border); }
+.ov-key { font-size: .62rem; letter-spacing: .16em; text-transform: uppercase; color: var(--stone); }
+.ov-value { font-family: var(--ff-d); font-size: 1.1rem; font-weight: 300; font-style: italic; }
+
+/* IMAGES */
+.full-img { width: 100%; overflow: hidden; position: relative; }
+.full-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--ease-o); display: block; }
+.full-img:hover img { transform: scale(1.03); }
+.full-img.ratio-16-9 { aspect-ratio: 16/9; }
+.full-img.ratio-4-3  { aspect-ratio: 4/3; }
+.full-img.ratio-sq   { aspect-ratio: 1; }
+.full-img.ratio-3-1  { aspect-ratio: 3/1; }
+
+/* LOGO SHOWCASE — white bg */
+.logo-showcase {
+  background: #fff;
+  display: flex; align-items: center; justify-content: center;
+  padding: 5rem 3.5rem;
+}
+.logo-showcase img { max-width: 580px; width: 75%; }
+
+/* TWO-UP & THREE-UP */
+.two-up { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); }
+.three-up { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1px; background: var(--border); }
+
+/* CAPTION STRIP */
+.caption-strip {
+  padding: 2rem 3.5rem;
+  display: flex; align-items: baseline; justify-content: space-between;
+  border-bottom: .5px solid var(--border);
+}
+.cap-title { font-family: var(--ff-d); font-size: 1.2rem; font-weight: 300; font-style: italic; }
+.cap-num { font-family: var(--ff-d); font-size: .85rem; font-weight: 300; color: var(--stone); }
+
+/* ELEMENTS SECTION — dark bg */
+.elements-sec {
+  background: #141C2A;
+  padding: 6rem 3.5rem;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center;
+}
+.el-label { font-size: .62rem; letter-spacing: .22em; text-transform: uppercase; color: rgba(243,240,234,.3); margin-bottom: 1.5rem; }
+.el-heading { font-family: var(--ff-d); font-size: clamp(2rem, 4vw, 4rem); font-weight: 300; font-style: italic; line-height: 1.1; color: rgba(243,240,234,.9); margin-bottom: 1.5rem; }
+.el-text { font-size: .85rem; font-weight: 300; line-height: 1.9; color: rgba(243,240,234,.38); }
+.el-img { border: .5px solid rgba(243,240,234,.08); overflow: hidden; }
+.el-img img { width: 100%; display: block; }
+
+/* COLOUR PALETTE */
+.palette-sec { background: var(--navy); padding: 7rem 3.5rem; }
+.palette-label { font-size: .62rem; letter-spacing: .22em; text-transform: uppercase; color: rgba(243,240,234,.3); margin-bottom: 3rem; }
+.palette-heading { font-family: var(--ff-d); font-size: clamp(2.5rem, 5vw, 5rem); font-weight: 300; font-style: italic; line-height: 1; color: rgba(243,240,234,.9); margin-bottom: 4rem; }
+.swatches { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; border: .5px solid rgba(243,240,234,.06); }
+.swatch { padding: 2.5rem 1.5rem; }
+.sw-block { width: 36px; height: 36px; border-radius: 50%; margin-bottom: 1.2rem; }
+.sw-name { font-family: var(--ff-d); font-size: .95rem; font-weight: 300; color: rgba(243,240,234,.75); margin-bottom: .3rem; }
+.sw-hex { font-size: .58rem; letter-spacing: .14em; color: rgba(243,240,234,.28); }
+
+/* PATTERNS */
+.pattern-sec { padding: 7rem 3.5rem; }
+.pattern-label { font-size: .62rem; letter-spacing: .22em; text-transform: uppercase; color: var(--stone); margin-bottom: 1.5rem; }
+.pattern-heading { font-family: var(--ff-d); font-size: clamp(2rem, 4vw, 4rem); font-weight: 300; font-style: italic; line-height: 1.1; margin-bottom: 3.5rem; }
+.pattern-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; border: .5px solid var(--border); background: var(--border); }
+.pat-cell { overflow: hidden; }
+.pat-cell img { width: 100%; display: block; transition: transform 1.2s var(--ease-o); }
+.pat-cell:hover img { transform: scale(1.04); }
+.pat-label { padding: 1.2rem 1.5rem; background: var(--bg); border-top: .5px solid var(--border); font-size: .6rem; letter-spacing: .18em; text-transform: uppercase; color: var(--stone); }
+
+/* STAMP */
+.stamp-sec {
+  background: #F3F0EA;
+  padding: 7rem 3.5rem;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 8rem; align-items: center;
+}
+.stamp-text .ov-label { margin-bottom: 1.5rem; }
+.stamp-text .ov-heading { margin-bottom: 1.5rem; }
+.stamp-text .ov-text { color: var(--stone); }
+.stamp-img { display: flex; align-items: center; justify-content: center; }
+.stamp-img img { width: 75%; max-width: 340px; }
+
+/* FOOTER */
+.case-footer {
+  background: var(--ink); color: #F3F0EA;
+  padding: 5rem 3.5rem;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.cf-label { font-size: .62rem; letter-spacing: .22em; text-transform: uppercase; color: rgba(243,240,234,.35); margin-bottom: .8rem; }
+.cf-name { font-family: var(--ff-d); font-size: clamp(2rem, 4vw, 4rem); font-weight: 300; font-style: italic; }
+.cf-back {
+  display: inline-flex; align-items: center; gap: .9rem;
+  background: #F3F0EA; color: var(--ink);
+  padding: .95rem 2rem;
+  font-size: .68rem; letter-spacing: .15em; text-transform: uppercase;
+  text-decoration: none; transition: background .25s;
+}
+.cf-back:hover { background: var(--gold); color: #F3F0EA; }
+
+/* LABELED IMAGE */
+.labeled-img { position: relative; }
+.img-label {
+  position: absolute; bottom: 2rem; left: 2.5rem;
+  background: rgba(28,43,69,.8); backdrop-filter: blur(8px);
+  padding: .7rem 1.4rem;
+  font-size: .62rem; letter-spacing: .18em; text-transform: uppercase;
+  color: rgba(243,240,234,.7);
+}
+
+/* REVEAL */
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity .9s var(--ease-o), transform .9s var(--ease-o); }
+.reveal.in { opacity: 1; transform: none; }
+.rd1 { transition-delay: .1s; } .rd2 { transition-delay: .2s; } .rd3 { transition-delay: .3s; }
+
+@keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: none; } }
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  nav { padding: 1.5rem 1.5rem; }
+  .hero-content { padding: 0 1.5rem 3rem; }
+  .hero-meta { flex-wrap: wrap; gap: 2rem; }
+  .overview, .elements-sec, .stamp-sec { grid-template-columns: 1fr; gap: 3rem; padding: 5rem 1.5rem; }
+  .two-up, .three-up { grid-template-columns: 1fr; }
+  .swatches { grid-template-columns: repeat(2, 1fr); }
+  .palette-sec, .pattern-sec { padding: 5rem 1.5rem; }
+  .caption-strip { padding: 1.5rem 1.5rem; }
+  .case-footer { flex-direction: column; gap: 3rem; padding: 4rem 1.5rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cur"></div>
+<div class="cursor-ring" id="cring"></div>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-back" href="index.html">
+    <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.2">
+      <path d="M13 7H1M6 2L1 7l5 5"/>
+    </svg>
+    Back to Portfolio
+  </a>
+  <div>
+    <div class="nav-title">Jordan Moran</div>
+    <div class="nav-cat">Brand Identity</div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-img"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="hero-tag">Full Brand Identity System</p>
+    <h1 class="hero-title">Jordan<br><em>Moran</em></h1>
+    <div class="hero-meta">
+      <div class="meta-item">
+        <div class="meta-label">Category</div>
+        <div class="meta-val">Brand Identity</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Deliverables</div>
+        <div class="meta-val">Logo · Cards · Patterns</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Industry</div>
+        <div class="meta-val">Photography & Video</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Year</div>
+        <div class="meta-val">2024</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OVERVIEW -->
+<section class="overview">
+  <div class="reveal">
+    <div class="ov-label">Project Overview</div>
+    <h2 class="ov-heading">"A brand built for someone who creates — bold, precise, and unmistakably professional."</h2>
+    <p class="ov-text">Jordan Moran is a photography, video, and graphics professional based in Barrie, Ontario. The brief called for a complete brand identity system that would feel authoritative and modern — capable of working across business cards, digital assets, print, and signage.<br><br>The JM monogram draws on the precision of a camera viewfinder: bracket marks, a chevron, and a focus crosshair — all woven into a mark that communicates craft and attention to detail.</p>
+  </div>
+  <div class="reveal rd2">
+    <div class="ov-row"><span class="ov-key">Client</span><span class="ov-value">Jordan Moran</span></div>
+    <div class="ov-row"><span class="ov-key">Scope</span><span class="ov-value">Full Brand Identity</span></div>
+    <div class="ov-row"><span class="ov-key">Deliverables</span><span class="ov-value">Logo Suite, Business Cards, Patterns, Stamp</span></div>
+    <div class="ov-row"><span class="ov-key">Tools</span><span class="ov-value">Illustrator, Photoshop, InDesign</span></div>
+    <div class="ov-row"><span class="ov-key">Location</span><span class="ov-value">Barrie, Ontario</span></div>
+    <div class="ov-row"><span class="ov-key">Year</span><span class="ov-value">2024</span></div>
+  </div>
+</section>
+
+<!-- PRIMARY LOGO -->
+<div class="caption-strip reveal">
+  <span class="cap-title">Primary Logo</span>
+  <span class="cap-num">01</span>
+</div>
+<div class="logo-showcase reveal">
+  <img src="jordanmoran/Primary_Logo.jpg" alt="Jordan Moran Primary Logo">
+</div>
+
+<!-- SECONDARY LOGO -->
+<div class="caption-strip reveal">
+  <span class="cap-title">Secondary Logo — Monogram</span>
+  <span class="cap-num">02</span>
+</div>
+<div class="logo-showcase reveal" style="background:#1C2B45;">
+  <img src="jordanmoran/Secondary_Logo.jpg" alt="Jordan Moran Secondary Logo" style="filter: brightness(1.1);">
+</div>
+
+<!-- BUSINESS CARDS -->
+<div class="caption-strip reveal">
+  <span class="cap-title">Business Cards</span>
+  <span class="cap-num">03</span>
+</div>
+<div class="two-up">
+  <div class="labeled-img reveal">
+    <div class="full-img ratio-4-3">
+      <img src="jordanmoran/Business_Card_Front.jpg" alt="Business Card Front">
+    </div>
+    <div class="img-label">Front — Logo Mark</div>
+  </div>
+  <div class="labeled-img reveal rd1">
+    <div class="full-img ratio-4-3">
+      <img src="jordanmoran/Business_Card_Back.jpg" alt="Business Card Back">
+    </div>
+    <div class="img-label">Back — Contact Details</div>
+  </div>
+</div>
+
+<!-- STAMP MARK -->
+<section class="stamp-sec">
+  <div class="reveal">
+    <div class="ov-label">Stamp Mark</div>
+    <h2 class="ov-heading">The Circular Badge</h2>
+    <p class="ov-text">The stamp mark encircles the JM monogram within a typographic ring — "JORDAN MORAN · PHOTOGRAPHY · VIDEO · GRAPHICS" — creating a self-contained brand seal suitable for watermarking, embossing, and social media profiles. The camera bracket corners ground it in the visual language of photography.</p>
+  </div>
+  <div class="stamp-img reveal rd2">
+    <img src="jordanmoran/Stamp_Mark.jpg" alt="Jordan Moran Stamp Mark">
+  </div>
+</section>
+
+<!-- GRAPHIC ELEMENTS -->
+<section class="elements-sec">
+  <div class="reveal">
+    <div class="el-label">Graphic Elements</div>
+    <h2 class="el-heading">System<br>Details</h2>
+    <p class="el-text">Four core graphic elements support the full brand system: the Chevron — drawn from the monogram's V-shape; the Focus Crosshair — referencing camera autofocus; the L-Mark — the corner bracket used throughout the identity; and the Divider — a fine horizontal rule for editorial layouts. Together they create a consistent visual language across all touchpoints.</p>
+  </div>
+  <div class="el-img reveal rd2">
+    <img src="jordanmoran/Elements.jpg" alt="Jordan Moran Graphic Elements">
+  </div>
+</section>
+
+<!-- PALETTE -->
+<section class="palette-sec reveal">
+  <div class="palette-label">Colour System</div>
+  <h2 class="palette-heading">Authority<br>in Navy & Gold</h2>
+  <div class="swatches">
+    <div class="swatch" style="background:rgba(243,240,234,.03);">
+      <div class="sw-block" style="background:#1C2B45;"></div>
+      <div class="sw-name">Navy</div>
+      <div class="sw-hex">#1C2B45</div>
+    </div>
+    <div class="swatch" style="background:rgba(243,240,234,.03);">
+      <div class="sw-block" style="background:#8B1F1F;"></div>
+      <div class="sw-name">Crimson</div>
+      <div class="sw-hex">#8B1F1F</div>
+    </div>
+    <div class="swatch" style="background:rgba(243,240,234,.03);">
+      <div class="sw-block" style="background:#C9A84C;"></div>
+      <div class="sw-name">Gold</div>
+      <div class="sw-hex">#C9A84C</div>
+    </div>
+    <div class="swatch" style="background:rgba(243,240,234,.03);">
+      <div class="sw-block" style="background:#F3F0EA; border:.5px solid rgba(255,255,255,.2);"></div>
+      <div class="sw-name">Ivory</div>
+      <div class="sw-hex">#F3F0EA</div>
+    </div>
+  </div>
+</section>
+
+<!-- PATTERNS -->
+<section class="pattern-sec">
+  <div class="reveal">
+    <div class="pattern-label">Brand Patterns</div>
+    <h2 class="pattern-heading">Repeating<br>Visual Texture</h2>
+  </div>
+  <div class="pattern-grid reveal rd1">
+    <div class="pat-cell">
+      <img src="jordanmoran/Pattern1.jpg" alt="Pattern 1 — L-Marks">
+      <div class="pat-label">Pattern 01 — Corner Marks</div>
+    </div>
+    <div class="pat-cell">
+      <img src="jordanmoran/Pattern2.jpg" alt="Pattern 2 — Dots">
+      <div class="pat-label">Pattern 02 — Focus Grid</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<div class="case-footer">
+  <div>
+    <div class="cf-label">Project</div>
+    <div class="cf-name">Jordan Moran — Brand Identity</div>
+  </div>
+  <a class="cf-back" href="index.html">← Back to Portfolio</a>
+</div>
+
+<script>
+const cur = document.getElementById('cur');
+const ring = document.getElementById('cring');
+let mx = 0, my = 0, rx = 0, ry = 0;
+document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; cur.style.left = mx+'px'; cur.style.top = my+'px'; });
+(function loop() { rx += (mx-rx)*.11; ry += (my-ry)*.11; ring.style.left = rx+'px'; ring.style.top = ry+'px'; requestAnimationFrame(loop); })();
+document.querySelectorAll('a').forEach(el => {
+  el.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
+  el.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
+});
+const io = new IntersectionObserver(e => e.forEach(x => { if(x.isIntersecting) x.target.classList.add('in'); }), { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>

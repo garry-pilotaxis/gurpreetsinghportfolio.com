@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Photography — Gurpreet Singh</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:    #F3F0EA;
+  --dark:  #0C0B09;
+  --ink:   #0C0B09;
+  --gold:  #B8904A;
+  --stone: #7A776F;
+  --border: rgba(243,240,234,.08);
+  --ff-d: 'Cormorant Garamond', Georgia, serif;
+  --ff-b: 'DM Sans', system-ui, sans-serif;
+  --ease-o: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+body { background: var(--dark); color: #F3F0EA; font-family: var(--ff-b); overflow-x: hidden; cursor: none; }
+
+/* NOISE */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none; z-index: 9990; mix-blend-mode: overlay;
+}
+
+/* CURSOR */
+.cursor { position: fixed; width: 8px; height: 8px; background: #F3F0EA; border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: width .25s, height .25s, background .25s; }
+.cursor-ring { position: fixed; width: 34px; height: 34px; border: 1px solid rgba(243,240,234,.25); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); transition: width .3s, height .3s; }
+body.hovering .cursor { width: 12px; height: 12px; background: var(--gold); }
+body.hovering .cursor-ring { width: 48px; height: 48px; border-color: rgba(184,144,74,.35); }
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.75rem 3.5rem;
+  background: rgba(12,11,9,.88);
+  backdrop-filter: blur(14px);
+  border-bottom: .5px solid rgba(243,240,234,.06);
+}
+.nav-back {
+  display: flex; align-items: center; gap: .8rem;
+  font-size: .68rem; letter-spacing: .16em; text-transform: uppercase;
+  color: rgba(243,240,234,.35); text-decoration: none;
+  transition: color .2s, gap .2s;
+}
+.nav-back:hover { color: rgba(243,240,234,.85); gap: 1.1rem; }
+.nav-back svg { width: 14px; transition: transform .2s; }
+.nav-back:hover svg { transform: translateX(-3px); }
+.nav-title { font-family: var(--ff-d); font-size: 1rem; font-weight: 400; letter-spacing: .08em; color: rgba(243,240,234,.85); text-align: right; }
+.nav-cat { font-size: .6rem; letter-spacing: .2em; text-transform: uppercase; color: rgba(243,240,234,.28); text-align: right; margin-top: .15rem; }
+
+/* ── HERO ──────────────────────────────────────────────── */
+.hero {
+  height: 100vh; display: flex; flex-direction: column;
+  align-items: flex-start; justify-content: flex-end;
+  padding: 0 3.5rem 5rem;
+  position: relative; overflow: hidden;
+}
+.hero-bg {
+  position: absolute; inset: 0;
+  background: url('photography/IMG_9857.JPG') center 30% / cover no-repeat;
+  transform: scale(1.04);
+  animation: zoomOut 9s var(--ease-o) forwards;
+  filter: brightness(.38);
+}
+@keyframes zoomOut { to { transform: scale(1); } }
+.hero-line {
+  position: absolute; left: 3.5rem; top: 0; bottom: 0;
+  width: .5px; background: rgba(243,240,234,.06);
+}
+.hero-content { position: relative; z-index: 2; animation: fadeUp 1.2s .3s var(--ease-o) both; }
+.hero-eyebrow {
+  font-size: .6rem; letter-spacing: .32em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 1.5rem; opacity: .85;
+  display: flex; align-items: center; gap: 1.2rem;
+}
+.hero-eyebrow::before { content: ''; width: 32px; height: .5px; background: var(--gold); opacity: .5; }
+.hero-title {
+  font-family: var(--ff-d);
+  font-size: clamp(4rem, 12vw, 12rem);
+  font-weight: 300; line-height: .88; letter-spacing: -.02em;
+  color: rgba(243,240,234,.92); margin-bottom: 2.5rem;
+}
+.hero-title em { font-style: italic; color: rgba(243,240,234,.55); }
+.hero-meta {
+  display: flex; gap: 3rem; align-items: center;
+  padding-top: 2rem;
+  border-top: .5px solid rgba(243,240,234,.1);
+}
+.hm-item { }
+.hm-label { font-size: .54rem; letter-spacing: .22em; text-transform: uppercase; color: rgba(243,240,234,.28); margin-bottom: .35rem; }
+.hm-val { font-family: var(--ff-d); font-size: .95rem; font-weight: 300; color: rgba(243,240,234,.65); }
+
+/* ── INTRO STRIP ───────────────────────────────────────── */
+.intro-strip {
+  padding: 4rem 3.5rem;
+  display: flex; align-items: baseline; justify-content: space-between;
+  border-bottom: .5px solid var(--border);
+}
+.intro-text {
+  font-family: var(--ff-d);
+  font-size: clamp(1.4rem, 2.5vw, 2.2rem);
+  font-weight: 300; font-style: italic; line-height: 1.4;
+  color: rgba(243,240,234,.55); max-width: 680px;
+}
+.intro-count {
+  font-family: var(--ff-d); font-size: 4rem; font-weight: 300;
+  color: rgba(243,240,234,.06); letter-spacing: -.02em;
+  white-space: nowrap;
+}
+
+/* ── PHOTO CARD ────────────────────────────────────────── */
+.photo-item {
+  border-bottom: .5px solid var(--border);
+}
+
+/* Full-width layout */
+.photo-item.full .photo-img {
+  width: 100%; overflow: hidden;
+}
+.photo-item.full .photo-img img {
+  width: 100%; display: block;
+  transition: transform 1.4s var(--ease-o);
+}
+.photo-item.full:hover .photo-img img { transform: scale(1.03); }
+.photo-item.full .photo-img.portrait { aspect-ratio: unset; max-height: 90vh; overflow:hidden; }
+.photo-item.full .photo-img.portrait img { width:100%; height:90vh; object-fit:cover; }
+.photo-item.full .photo-caption {
+  padding: 2.2rem 3.5rem;
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 4rem;
+  border-top: .5px solid var(--border);
+}
+
+/* Side-by-side layout */
+.photo-item.split {
+  display: grid; grid-template-columns: 1fr 1fr;
+}
+.photo-item.split .photo-img { overflow: hidden; }
+.photo-item.split .photo-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 1.4s var(--ease-o); }
+.photo-item.split:hover .photo-img img { transform: scale(1.03); }
+.photo-item.split .photo-caption {
+  padding: 3.5rem;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  border-left: .5px solid var(--border);
+}
+
+/* Wide 2/3 + 1/3 */
+.photo-item.wide {
+  display: grid; grid-template-columns: 2fr 1fr;
+}
+.photo-item.wide .photo-img { overflow: hidden; }
+.photo-item.wide .photo-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 1.4s var(--ease-o); }
+.photo-item.wide:hover .photo-img img { transform: scale(1.03); }
+.photo-item.wide .photo-caption {
+  padding: 3.5rem;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  border-left: .5px solid var(--border);
+}
+
+/* Narrow 1/3 + 2/3 */
+.photo-item.narrow {
+  display: grid; grid-template-columns: 1fr 2fr;
+}
+.photo-item.narrow .photo-img { overflow: hidden; grid-column: 2; grid-row: 1; }
+.photo-item.narrow .photo-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 1.4s var(--ease-o); }
+.photo-item.narrow:hover .photo-img img { transform: scale(1.03); }
+.photo-item.narrow .photo-caption {
+  grid-column: 1; grid-row: 1;
+  padding: 3.5rem;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  border-right: .5px solid var(--border);
+}
+
+/* CAPTION ELEMENTS */
+.photo-num {
+  font-family: var(--ff-d); font-size: .75rem; font-weight: 300;
+  color: rgba(243,240,234,.2); letter-spacing: .08em; margin-bottom: 1.8rem;
+}
+.photo-title {
+  font-family: var(--ff-d);
+  font-size: clamp(1.4rem, 2.5vw, 2.4rem);
+  font-weight: 300; font-style: italic; line-height: 1.2;
+  color: rgba(243,240,234,.85); margin-bottom: 1.2rem;
+}
+.photo-desc {
+  font-size: .82rem; font-weight: 300; line-height: 1.85;
+  color: rgba(243,240,234,.38); margin-bottom: 2rem;
+}
+.photo-tags {
+  display: flex; flex-wrap: wrap; gap: .5rem;
+}
+.photo-tag {
+  font-size: .56rem; letter-spacing: .18em; text-transform: uppercase;
+  color: rgba(243,240,234,.25);
+  border: .5px solid rgba(243,240,234,.1);
+  padding: .45rem .9rem;
+}
+.photo-tag.cam { color: var(--gold); border-color: rgba(184,144,74,.25); }
+
+/* Full-width caption inline layout */
+.photo-caption-left { flex: 1; }
+.photo-caption-right {
+  display: flex; flex-direction: column; align-items: flex-end;
+  justify-content: flex-end; min-width: 200px;
+}
+
+/* ── TWO-UP ROW ─────────────────────────────────────────── */
+.two-up-row {
+  display: grid; grid-template-columns: 1fr 1fr;
+  border-bottom: .5px solid var(--border);
+}
+.two-up-cell { overflow: hidden; position: relative; }
+.two-up-cell:first-child { border-right: .5px solid var(--border); }
+.two-up-cell .tuc-img { overflow: hidden; }
+.two-up-cell .tuc-img img { width: 100%; display: block; transition: transform 1.4s var(--ease-o); }
+.two-up-cell:hover .tuc-img img { transform: scale(1.03); }
+.two-up-cell .tuc-cap {
+  padding: 1.8rem 2.5rem;
+  border-top: .5px solid var(--border);
+  display: flex; align-items: baseline; justify-content: space-between; gap: 2rem;
+}
+.tuc-num { font-family: var(--ff-d); font-size: .72rem; color: rgba(243,240,234,.2); }
+.tuc-title { font-family: var(--ff-d); font-size: 1.1rem; font-weight: 300; font-style: italic; color: rgba(243,240,234,.75); margin-bottom: .5rem; }
+.tuc-desc { font-size: .75rem; font-weight: 300; line-height: 1.75; color: rgba(243,240,234,.32); margin-bottom: .9rem; }
+.tuc-tag { font-size: .54rem; letter-spacing: .16em; text-transform: uppercase; color: rgba(184,144,74,.55); }
+
+/* ── FOOTER ─────────────────────────────────────────────── */
+.case-footer {
+  background: #080706;
+  padding: 5rem 3.5rem;
+  display: flex; align-items: center; justify-content: space-between;
+  border-top: .5px solid var(--border);
+}
+.cf-label { font-size: .58rem; letter-spacing: .22em; text-transform: uppercase; color: rgba(243,240,234,.2); margin-bottom: .8rem; }
+.cf-name { font-family: var(--ff-d); font-size: clamp(1.8rem, 4vw, 4rem); font-weight: 300; font-style: italic; color: rgba(243,240,234,.75); }
+.cf-back {
+  display: inline-flex; align-items: center; gap: .9rem;
+  border: .5px solid rgba(243,240,234,.12);
+  color: rgba(243,240,234,.45); background: transparent;
+  padding: 1rem 2.2rem;
+  font-size: .66rem; letter-spacing: .18em; text-transform: uppercase;
+  text-decoration: none; transition: background .25s, color .25s, border-color .25s;
+}
+.cf-back:hover { border-color: rgba(243,240,234,.4); color: rgba(243,240,234,.9); }
+
+/* REVEAL */
+.reveal { opacity: 0; transform: translateY(20px); transition: opacity .9s var(--ease-o), transform .9s var(--ease-o); }
+.reveal.in { opacity: 1; transform: none; }
+.rd1 { transition-delay: .1s; } .rd2 { transition-delay: .2s; }
+
+@keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  nav { padding: 1.4rem 1.5rem; }
+  .hero { padding: 0 1.5rem 3.5rem; }
+  .hero-meta { flex-wrap: wrap; gap: 1.8rem; }
+  .intro-strip { flex-direction: column; gap: 1.5rem; padding: 3rem 1.5rem; }
+  .intro-count { font-size: 2.5rem; }
+  .photo-item.split, .photo-item.wide, .photo-item.narrow { grid-template-columns: 1fr; }
+  .photo-item.narrow .photo-img { grid-column: 1; grid-row: 1; }
+  .photo-item.narrow .photo-caption { grid-column: 1; grid-row: 2; border-right: none; border-top: .5px solid var(--border); }
+  .photo-item.split .photo-caption,
+  .photo-item.wide .photo-caption { border-left: none; border-top: .5px solid var(--border); padding: 2.5rem 1.5rem; }
+  .photo-item.full .photo-caption { flex-direction: column; gap: 1.5rem; padding: 1.8rem 1.5rem; }
+  .two-up-row { grid-template-columns: 1fr; }
+  .two-up-cell:first-child { border-right: none; border-bottom: .5px solid var(--border); }
+  .two-up-cell .tuc-cap { padding: 1.5rem; }
+  .case-footer { flex-direction: column; gap: 3rem; padding: 4rem 1.5rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cur"></div>
+<div class="cursor-ring" id="cring"></div>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-back" href="index.html">
+    <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.2">
+      <path d="M13 7H1M6 2L1 7l5 5"/>
+    </svg>
+    Back to Portfolio
+  </a>
+  <div>
+    <div class="nav-title">Photography</div>
+    <div class="nav-cat">Street · Architecture · Night</div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-line"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Street & Urban Photography</p>
+    <h1 class="hero-title">Photo<em>graphy</em></h1>
+    <div class="hero-meta">
+      <div class="hm-item">
+        <div class="hm-label">Camera</div>
+        <div class="hm-val">Canon EOS R50</div>
+      </div>
+      <div class="hm-item">
+        <div class="hm-label">Location</div>
+        <div class="hm-val">Barrie, Ontario</div>
+      </div>
+      <div class="hm-item">
+        <div class="hm-label">Frames</div>
+        <div class="hm-val">7 Selected</div>
+      </div>
+      <div class="hm-item">
+        <div class="hm-label">Year</div>
+        <div class="hm-val">2024</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INTRO -->
+<div class="intro-strip reveal">
+  <p class="intro-text">"Streets tell stories only if you're patient enough to wait for them."</p>
+  <span class="intro-count">07</span>
+</div>
+
+<!-- ── PHOTO 01 — B&W Man at Crosswalk (full-width) ─── -->
+<div class="photo-item full reveal">
+  <div class="photo-img">
+    <img src="photography/EDIT-2.JPG" alt="Waiting — man at intersection in black and white">
+  </div>
+  <div class="photo-caption">
+    <div class="photo-caption-left">
+      <div class="photo-num">01 / 07</div>
+      <h2 class="photo-title">Waiting on the World</h2>
+      <p class="photo-desc">A stranger holds his ground at the edge of an empty intersection, a bird mid-flight above him — two things suspended between where they are and where they're going. Shot in black and white to strip the moment back to its weight.</p>
+    </div>
+    <div class="photo-caption-right">
+      <div class="photo-tags">
+        <span class="photo-tag">Street</span>
+        <span class="photo-tag">Documentary</span>
+        <span class="photo-tag cam">Canon EOS R50</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── PHOTO 02 — Downtown Arch at Dusk + 03 High-rise Day (two-up) ─── -->
+<div class="two-up-row">
+  <div class="two-up-cell reveal">
+    <div class="tuc-img">
+      <img src="photography/Edit-3.JPG" alt="Barrie downtown arch at dusk">
+    </div>
+    <div class="tuc-cap">
+      <div>
+        <div class="tuc-num">02 / 07</div>
+        <div class="tuc-title">The Golden Arch</div>
+        <p class="tuc-desc">Barrie's illuminated downtown gateway blazes against a storm-coloured sky, cars threading beneath it as the last of the sunset bleeds through. The city's crown at its best hour.</p>
+        <span class="tuc-tag">Canon EOS R50 · Cityscape · Dusk</span>
+      </div>
+    </div>
+  </div>
+  <div class="two-up-cell reveal rd1">
+    <div class="tuc-img">
+      <img src="photography/EDITED-1.JPG" alt="High-rise tower against blue sky">
+    </div>
+    <div class="tuc-cap">
+      <div>
+        <div class="tuc-num">03 / 07</div>
+        <div class="tuc-title">Rise</div>
+        <p class="tuc-desc">Two towers stacked in glass and concrete, punching through a white cloud bank on a clear afternoon. A study in how cities grow upward when they run out of room to breathe outward.</p>
+        <span class="tuc-tag">Canon EOS R50 · Architecture · Daylight</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── PHOTO 04 — Lamp at Night (narrow: caption left, wide image right) ─── -->
+<div class="photo-item narrow reveal">
+  <div class="photo-caption">
+    <div class="photo-num">04 / 07</div>
+    <h2 class="photo-title">One Lamp Against the Storm</h2>
+    <p class="photo-desc">A single street lamp holds its warmth against the dark, autumn leaves catching the glow like fire held still. Shot looking straight up into the coming storm.</p>
+    <div class="photo-tags">
+      <span class="photo-tag">Night</span>
+      <span class="photo-tag">Moody</span>
+      <span class="photo-tag cam">Canon EOS R50</span>
+    </div>
+  </div>
+  <div class="photo-img">
+    <img src="photography/IMG_9857.JPG" alt="Street lamp glowing at night with autumn leaves">
+  </div>
+</div>
+
+<!-- ── PHOTO 05 — Red Light Intersection (wide: big image left, caption right) ─── -->
+<div class="photo-item wide reveal">
+  <div class="photo-img">
+    <img src="photography/IMG_9862.JPG" alt="Red traffic light over wet intersection at dusk">
+  </div>
+  <div class="photo-caption">
+    <div class="photo-num">05 / 07</div>
+    <h2 class="photo-title">Red on Wet Asphalt</h2>
+    <p class="photo-desc">The city holds its breath under a red light. Headlights smear across wet pavement as a bruised dusk sky opens behind the intersection. The kind of frame that only lasts three seconds.</p>
+    <div class="photo-tags" style="margin-top:1.5rem;">
+      <span class="photo-tag">Street</span>
+      <span class="photo-tag">Dusk</span>
+      <span class="photo-tag cam">Canon EOS R50</span>
+    </div>
+  </div>
+</div>
+
+<!-- ── PHOTO 06 — Sculpture + 07 Tower at Dusk (two-up) ─── -->
+<div class="two-up-row">
+  <div class="two-up-cell reveal">
+    <div class="tuc-img">
+      <img src="photography/IMG_9865.JPG" alt="Large metal bird sculpture at dusk">
+    </div>
+    <div class="tuc-cap">
+      <div>
+        <div class="tuc-num">06 / 07</div>
+        <div class="tuc-title">Steel Wings</div>
+        <p class="tuc-desc">Barrie's waterfront guardian spreads its wings against a fading twilight, street lamps warming its base. A monumental sculpture that earns its scale when the sky goes dark.</p>
+        <span class="tuc-tag">Canon EOS R50 · Public Art · Twilight</span>
+      </div>
+    </div>
+  </div>
+  <div class="two-up-cell reveal rd1">
+    <div class="tuc-img">
+      <img src="photography/IMG_9869.JPG" alt="High-rise tower under storm clouds at dusk">
+    </div>
+    <div class="tuc-cap">
+      <div>
+        <div class="tuc-num">07 / 07</div>
+        <div class="tuc-title">Half-Swallowed</div>
+        <p class="tuc-desc">A glass tower caught half in storm light, half in darkness — windows glowing like embers while heavy cloud erases the top floors. The city blurring into weather.</p>
+        <span class="tuc-tag">Canon EOS R50 · Architecture · Storm</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="case-footer">
+  <div>
+    <div class="cf-label">Series</div>
+    <div class="cf-name">Barrie — Streets & Light</div>
+  </div>
+  <a class="cf-back" href="index.html">← Back to Portfolio</a>
+</div>
+
+<script>
+const cur = document.getElementById('cur');
+const ring = document.getElementById('cring');
+let mx = 0, my = 0, rx = 0, ry = 0;
+document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; cur.style.left = mx+'px'; cur.style.top = my+'px'; });
+(function loop() { rx += (mx-rx)*.11; ry += (my-ry)*.11; ring.style.left = rx+'px'; ring.style.top = ry+'px'; requestAnimationFrame(loop); })();
+document.querySelectorAll('a').forEach(el => {
+  el.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
+  el.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
+});
+const io = new IntersectionObserver(e => e.forEach(x => { if(x.isIntersecting) x.target.classList.add('in'); }), { threshold: 0.06 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>

@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Logofolio — Gurpreet Singh</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:    #F3F0EA;
+  --ink:   #0C0B09;
+  --dark:  #0C0B09;
+  --gold:  #B8904A;
+  --stone: #7A776F;
+  --border: rgba(12,11,9,.1);
+  --ff-d: 'Cormorant Garamond', Georgia, serif;
+  --ff-b: 'DM Sans', system-ui, sans-serif;
+  --ease-o: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+body { background: var(--ink); color: var(--bg); font-family: var(--ff-b); overflow-x: hidden; }
+
+/* NOISE */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.028'/%3E%3C/svg%3E");
+  pointer-events: none; z-index: 9990; mix-blend-mode: overlay;
+}
+
+/* SCROLL PROGRESS */
+.scroll-progress { position: fixed; top: 0; left: 0; right: 0; height: 1.5px; z-index: 9995; background: rgba(12,11,9,.2); pointer-events: none; }
+.scroll-progress-bar { height: 100%; width: 0%; background: linear-gradient(to right, var(--gold), rgba(184,144,74,.4)); transition: width .1s linear; }
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 2rem 3.5rem;
+  background: rgba(12,11,9,.88);
+  backdrop-filter: blur(20px);
+  border-bottom: .5px solid rgba(243,240,234,.05);
+}
+.nav-back {
+  display: flex; align-items: center; gap: .9rem;
+  font-size: .6rem; letter-spacing: .2em; text-transform: uppercase;
+  color: rgba(243,240,234,.28); text-decoration: none;
+  transition: color .35s, gap .35s var(--ease-o);
+}
+.nav-back:hover { color: var(--gold); gap: 1.3rem; }
+.nav-back svg { width: 13px; transition: transform .35s var(--ease-o); flex-shrink: 0; }
+.nav-back:hover svg { transform: translateX(-4px); }
+.nav-right { text-align: right; }
+.nav-title { font-family: var(--ff-d); font-size: 1rem; font-weight: 300; font-style: italic; letter-spacing: .06em; color: rgba(243,240,234,.75); }
+.nav-cat { font-size: .54rem; letter-spacing: .22em; text-transform: uppercase; color: rgba(243,240,234,.22); margin-top: .2rem; }
+
+/* ── HERO ─────────────────────────────────────────────── */
+.hero {
+  min-height: 62vh; display: flex; flex-direction: column;
+  align-items: flex-start; justify-content: flex-end;
+  padding: 0 3.5rem 5.5rem;
+  border-bottom: .5px solid rgba(243,240,234,.06);
+  position: relative; overflow: hidden;
+}
+.hero-num {
+  position: absolute; right: 3rem; bottom: 5.5rem;
+  font-family: var(--ff-d); font-size: clamp(8rem, 18vw, 18rem);
+  font-weight: 300; letter-spacing: -.05em; line-height: 1;
+  color: rgba(243,240,234,.03); pointer-events: none; user-select: none;
+}
+.hero-eyebrow {
+  font-size: .56rem; letter-spacing: .32em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 2rem; opacity: .75;
+  display: flex; align-items: center; gap: 1.4rem;
+  animation: fadeUp 1s .2s var(--ease-o) both;
+}
+.hero-eyebrow::before { content: ''; width: 40px; height: .5px; background: linear-gradient(to right, transparent, var(--gold)); }
+.hero-title {
+  font-family: var(--ff-d);
+  font-size: clamp(4.5rem, 12vw, 14rem);
+  font-weight: 300; line-height: .86; letter-spacing: -.03em;
+  color: rgba(243,240,234,.9);
+  animation: fadeUp 1s .35s var(--ease-o) both;
+}
+.hero-title em { font-style: italic; color: rgba(243,240,234,.35); }
+.hero-sub {
+  margin-top: 2.5rem;
+  font-size: .78rem; font-weight: 300; line-height: 1.9;
+  color: rgba(243,240,234,.24); max-width: 440px;
+  animation: fadeUp 1s .5s var(--ease-o) both;
+  letter-spacing: .01em;
+}
+
+/* ── STAT BAR ─────────────────────────────────────────── */
+.stat-bar {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  border-bottom: .5px solid rgba(243,240,234,.06);
+}
+.stat-item {
+  padding: 2.2rem 3.5rem;
+  border-right: .5px solid rgba(243,240,234,.06);
+  transition: background .35s;
+}
+.stat-item:hover { background: rgba(243,240,234,.02); }
+.stat-item:last-child { border-right: none; }
+.stat-label { font-size: .5rem; letter-spacing: .26em; text-transform: uppercase; color: rgba(243,240,234,.2); margin-bottom: .7rem; }
+.stat-val { font-family: var(--ff-d); font-size: 1.9rem; font-weight: 300; color: rgba(243,240,234,.68); letter-spacing: -.02em; line-height: 1; }
+
+/* ── LOGO GRID ────────────────────────────────────────── */
+.logo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: #D8D4CD;
+  border-top: 1px solid #D8D4CD;
+}
+
+/* BASE LOGO CARD — all white */
+.lc {
+  position: relative; overflow: hidden;
+  display: flex; flex-direction: column;
+  background: #fafaf8;
+  transition: background .45s var(--ease-o);
+}
+.lc:hover { background: #fff; }
+
+/* The image area */
+.lc-img {
+  flex: 1; background: transparent;
+  display: flex; align-items: center; justify-content: center;
+  padding: 4.5rem 4rem;
+  overflow: hidden;
+  min-height: 320px;
+  position: relative;
+}
+/* Gold bottom line that slides in on hover */
+.lc-img::after {
+  content: ''; position: absolute;
+  bottom: 0; left: 10%; right: 10%; height: .5px;
+  background: linear-gradient(to right, transparent, var(--gold), transparent);
+  transform: scaleX(0); transform-origin: center;
+  transition: transform .6s var(--ease-o);
+  opacity: .5;
+}
+.lc:hover .lc-img::after { transform: scaleX(1); }
+
+.lc-img img {
+  max-width: 85%; max-height: 240px;
+  width: 85%;
+  object-fit: contain; display: block;
+  transition: transform .85s var(--ease-o), filter .4s;
+  filter: contrast(1);
+}
+.lc:hover .lc-img img { transform: scale(1.04); }
+
+/* Info strip */
+.lc-info {
+  padding: 1.8rem 2.5rem;
+  border-top: .5px solid rgba(12,11,9,.06);
+  background: transparent;
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  position: relative;
+}
+/* Gold underline animation on info */
+.lc-info::after {
+  content: ''; position: absolute;
+  bottom: 0; left: 0; right: 0; height: .5px;
+  background: var(--gold);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform .55s var(--ease-o);
+}
+.lc:hover .lc-info::after { transform: scaleX(1); }
+
+.lc-name {
+  font-family: var(--ff-d); font-size: 1.1rem; font-weight: 300;
+  font-style: italic; margin-bottom: .3rem; color: rgba(12,11,9,.78);
+  letter-spacing: -.01em;
+}
+.lc-desc {
+  font-size: .64rem; font-weight: 300; line-height: 1.6; color: rgba(12,11,9,.32);
+}
+.lc-tag {
+  font-size: .5rem; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--gold); white-space: nowrap; opacity: .8;
+  flex-shrink: 0;
+}
+
+/* Hover number */
+.lc-hover-num {
+  position: absolute; top: 1.4rem; right: 1.8rem;
+  font-family: var(--ff-d); font-size: .7rem; font-weight: 300;
+  color: rgba(12,11,9,.06); letter-spacing: .08em;
+  transition: color .4s, opacity .4s;
+}
+.lc:hover .lc-hover-num { color: rgba(12,11,9,.14); }
+
+/* Featured full-width — spans all 3 columns */
+.lc.featured { grid-column: span 3; }
+.lc.featured .lc-img { min-height: 420px; padding: 5rem 8rem; }
+.lc.featured .lc-img img { max-width: 60%; max-height: 320px; width: 60%; }
+
+/* Wide — spans 2 columns */
+.lc.wide { grid-column: span 2; }
+.lc.wide .lc-img { min-height: 360px; padding: 4.5rem 5rem; }
+.lc.wide .lc-img img { max-width: 70%; max-height: 280px; width: 70%; }
+
+/* ── FOOTER ───────────────────────────────────────────── */
+.case-footer {
+  padding: 6rem 3.5rem;
+  display: flex; align-items: center; justify-content: space-between;
+  border-top: .5px solid rgba(243,240,234,.06);
+  background: #060604;
+}
+.cf-label { font-size: .54rem; letter-spacing: .28em; text-transform: uppercase; color: rgba(243,240,234,.16); margin-bottom: 1rem; }
+.cf-name { font-family: var(--ff-d); font-size: clamp(2rem, 5vw, 5rem); font-weight: 300; font-style: italic; color: rgba(243,240,234,.65); letter-spacing: -.02em; }
+.cf-back {
+  display: inline-flex; align-items: center; gap: 1rem;
+  border: .5px solid rgba(243,240,234,.1);
+  color: rgba(243,240,234,.32); padding: 1.2rem 2.5rem;
+  font-size: .58rem; letter-spacing: .22em; text-transform: uppercase;
+  text-decoration: none; transition: border-color .4s var(--ease-o), color .4s;
+  position: relative; overflow: hidden;
+}
+.cf-back::before {
+  content: ''; position: absolute; inset: 0;
+  background: rgba(184,144,74,.1);
+  transform: translateX(-101%); transition: transform .45s var(--ease-o);
+}
+.cf-back:hover::before { transform: translateX(0); }
+.cf-back:hover { border-color: rgba(184,144,74,.35); color: rgba(243,240,234,.9); }
+
+/* REVEAL */
+.reveal { opacity: 0; transform: translateY(20px); transition: opacity .9s var(--ease-o), transform .9s var(--ease-o); }
+.reveal.in { opacity: 1; transform: none; }
+/* Logo cards: never go fully invisible — keeps white bg showing */
+.lc.reveal { opacity: 0; transform: none; }
+.lc.reveal.in { opacity: 1; }
+.rd1 { transition-delay: .08s; } .rd2 { transition-delay: .16s; } .rd3 { transition-delay: .24s; } .rd4 { transition-delay: .32s; } .rd5 { transition-delay: .4s; }
+
+@keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  nav { padding: 1.4rem 1.5rem; }
+  .hero { padding: 0 1.5rem 3.5rem; min-height: 40vh; }
+  .stat-bar { grid-template-columns: repeat(2, 1fr); }
+  .stat-item { padding: 1.5rem; }
+  .logo-grid { grid-template-columns: 1fr 1fr; }
+  .lc.featured { grid-column: span 2; }
+  /* RITUAL (4th card) & TerraVentures (6th card) go full-width in 2-col mode */
+  .lc:nth-child(4) { grid-column: span 2; }
+  .lc:nth-child(6) { grid-column: span 2; }
+  .case-footer { flex-direction: column; gap: 3rem; padding: 4rem 1.5rem; }
+}
+@media (max-width: 560px) {
+  .logo-grid { grid-template-columns: 1fr; }
+  .lc.featured { grid-column: span 1; }
+}
+</style>
+</head>
+<body>
+
+<div class="scroll-progress"><div class="scroll-progress-bar" id="spbar"></div></div>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-back" href="index.html">
+    <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.2">
+      <path d="M13 7H1M6 2L1 7l5 5"/>
+    </svg>
+    Back to Portfolio
+  </a>
+  <div class="nav-right">
+    <div class="nav-title">Logofolio</div>
+    <div class="nav-cat">Logo Design Collection</div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-num">06</div>
+  <p class="hero-eyebrow">Logo Design Work</p>
+  <h1 class="hero-title">Logo<em>folio</em></h1>
+  <p class="hero-sub">A curated collection of logo marks and brand identities — each one built around a single clear idea, expressed with precision and intent.</p>
+</section>
+
+<!-- STAT BAR -->
+<div class="stat-bar reveal">
+  <div class="stat-item">
+    <div class="stat-label">Logos</div>
+    <div class="stat-val">06</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-label">Industries</div>
+    <div class="stat-val">Coffee · Beauty · Salon · Luxury · Adventure · Creative</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-label">Tools</div>
+    <div class="stat-val">Illustrator · Photoshop</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-label">Year</div>
+    <div class="stat-val">2024</div>
+  </div>
+</div>
+
+<!-- LOGO GRID -->
+<div class="logo-grid">
+
+  <!-- ROW 1: CAFFORA full-width (span 3) -->
+  <!-- 01 CAFFORA -->
+  <div class="lc featured reveal">
+    <div class="lc-hover-num">01</div>
+    <div class="lc-img">
+      <img src="logofolio/caffora.jpg" alt="CAFFORA Logo">
+    </div>
+    <div class="lc-info">
+      <div>
+        <div class="lc-name">CAFFORA</div>
+        <div class="lc-desc">A bold editorial wordmark for a premium coffee brand — Refine. Rich. Remarkable.</div>
+      </div>
+      <div class="lc-tag">Coffee · Wordmark</div>
+    </div>
+  </div>
+
+  <!-- ROW 2: 3 cards × span 1 each -->
+  <!-- 02 LADYluck -->
+  <div class="lc reveal">
+    <div class="lc-hover-num">02</div>
+    <div class="lc-img">
+      <img src="logofolio/ladyluck.jpg" alt="LADYluck Logo">
+    </div>
+    <div class="lc-info">
+      <div>
+        <div class="lc-name">LADYluck</div>
+        <div class="lc-desc">An elegant beauty brand logotype with a custom teardrop motif, crafted for the modern woman.</div>
+      </div>
+      <div class="lc-tag">Beauty · Logotype</div>
+    </div>
+  </div>
+
+  <!-- 03 Nextyle -->
+  <div class="lc reveal rd1">
+    <div class="lc-hover-num">03</div>
+    <div class="lc-img">
+      <img src="logofolio/nextyle-bw.jpg" alt="Nextyle Salon Logo">
+    </div>
+    <div class="lc-info">
+      <div>
+        <div class="lc-name">Nextyle Salon</div>
+        <div class="lc-desc">A forward-facing salon identity built from geometric chevrons and confident, clean type.</div>
+      </div>
+      <div class="lc-tag">Salon · Mark + Type</div>
+    </div>
+  </div>
+
+  <!-- 04 RITUAL -->
+  <div class="lc reveal rd2">
+    <div class="lc-hover-num">04</div>
+    <div class="lc-img">
+      <img src="logofolio/ritual.jpg" alt="RITUAL Logo">
+    </div>
+    <div class="lc-info">
+      <div>
+        <div class="lc-name">RITUAL</div>
+        <div class="lc-desc">A heritage serif wordmark for a premium chocolate brand rooted in craft and slow tradition.</div>
+      </div>
+      <div class="lc-tag">Chocolate · Luxury</div>
+    </div>
+  </div>
+
+  <!-- ROW 3: Jordan Moran wide (span 2) + TerraVentures (span 1) -->
+  <!-- 05 Jordan Moran -->
+  <div class="lc wide reveal">
+    <div class="lc-hover-num">05</div>
+    <div class="lc-img">
+      <img src="logofolio/jordan-mono.png" alt="Jordan Moran Logo">
+    </div>
+    <div class="lc-info">
+      <div>
+        <div class="lc-name">Jordan Moran</div>
+        <div class="lc-desc">A precision JM monogram drawn from camera viewfinder geometry — bold, structured, and unmistakably professional.</div>
+      </div>
+      <div class="lc-tag">Photography · Monogram</div>
+    </div>
+  </div>
+
+  <!-- 06 TerraVentures -->
+  <div class="lc bg-white reveal rd1">
+    <div class="lc-hover-num">06</div>
+    <div class="lc-img">
+      <img src="logofolio/terraventure.jpg" alt="TerraVentures Logo">
+    </div>
+    <div class="lc-info">
+      <div>
+        <div class="lc-name">TerraVentures</div>
+        <div class="lc-desc">An interlocking knot-and-compass mark for an adventure brand built to go further, always.</div>
+      </div>
+      <div class="lc-tag">Adventure · Symbol Mark</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="case-footer">
+  <div>
+    <div class="cf-label">Collection</div>
+    <div class="cf-name">Logofolio — 2024</div>
+  </div>
+  <a class="cf-back" href="index.html">← Back to Portfolio</a>
+</div>
+
+<script>
+// SCROLL PROGRESS
+const spbar = document.getElementById('spbar');
+window.addEventListener('scroll', ()=>{ spbar.style.width = (window.scrollY/(document.body.scrollHeight-window.innerHeight)*100)+'%'; }, {passive:true});
+const io = new IntersectionObserver(e => e.forEach(x => { if(x.isIntersecting) x.target.classList.add('in'); }), { threshold: 0.06 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
